@@ -12,7 +12,7 @@
   const y = $("#year"); if (y) y.textContent = new Date().getFullYear();
 
   /* ---------- Gallery (curated) ---------- */
-  const GALLERY = [
+  const FEATURED = [
     ["g42", "Modernus karkasinis namas tamsiu stogu"],
     ["g05", "Terasa su mediniu stogu prie namo"],
     ["g37", "Pastatytas karkasinis namas su balkonu"],
@@ -38,13 +38,34 @@
     ["g28", "Medinė vidaus apdaila"],
     ["g68", "Pastatytas namas su prieangiu"]
   ];
+  // remaining real project photos, revealed via "Žiūrėti visas"
+  const MORE = ["g01","g02","g04","g06","g08","g09","g13","g14","g17","g18","g19","g20","g22","g23","g24","g25","g27","g29","g31","g32","g33","g34","g35","g36","g39","g41","g43","g46","g47","g48","g50","g51","g53","g54","g55","g58","g60","g61","g62","g63","g64","g66","g67","g70"]
+    .map(f => [f, "DG Statybos – atlikti statybų darbai Klaipėdos krašte"]);
+  const GALLERY = FEATURED.concat(MORE);
+  const GAL_INITIAL = 12;
   const masonry = $("#masonry");
   if (masonry) {
     masonry.innerHTML = GALLERY.map(([f, alt], i) =>
-      `<button class="tile" data-i="${i}" aria-label="Padidinti nuotrauką: ${alt}">
+      `<button class="tile${i >= GAL_INITIAL ? ' hidden' : ''}" data-i="${i}" aria-label="Padidinti nuotrauką: ${alt}">
         <img src="assets/img/${f}.webp" alt="${alt}" loading="lazy" />
         <span class="zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M11 8v6M8 11h6"/></svg></span>
       </button>`).join("");
+  }
+
+  /* ---------- Gallery "view all" toggle ---------- */
+  const galToggle = $("#galToggle");
+  if (galToggle && masonry) {
+    let expanded = false;
+    galToggle.addEventListener("click", () => {
+      expanded = !expanded;
+      $$(".tile", masonry).forEach((t, i) => { if (i >= GAL_INITIAL) t.classList.toggle("hidden", !expanded); });
+      $(".lbl", galToggle).textContent = expanded ? "Rodyti mažiau" : "Žiūrėti visas darbus (" + GALLERY.length + ")";
+      galToggle.classList.toggle("open", expanded);
+      if (!expanded) {
+        const d = $("#darbai");
+        if (d) { lenis ? lenis.scrollTo(d, { offset: -navH }) : d.scrollIntoView({ behavior: reduce ? "auto" : "smooth" }); }
+      }
+    });
   }
 
   /* ---------- Lightbox ---------- */

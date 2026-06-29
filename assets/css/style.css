@@ -276,6 +276,7 @@ p{max-width:64ch}
 .gallery-head{display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap}
 .masonry{columns:3;column-gap:clamp(.7rem,1.3vw,1.1rem);margin-top:clamp(2rem,4vw,3.2rem)}
 .masonry .tile{break-inside:avoid;margin-bottom:clamp(.7rem,1.3vw,1.1rem);position:relative;border-radius:var(--r);overflow:hidden;cursor:zoom-in;background:var(--surface-2);box-shadow:var(--shadow-sm)}
+.masonry .tile.hidden{display:none}
 .masonry .tile img{width:100%;display:block;transition:transform .7s var(--ease)}
 .masonry .tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(21,19,14,0) 60%,rgba(21,19,14,.4) 100%);opacity:0;transition:opacity .5s var(--ease)}
 .masonry .tile:hover img{transform:scale(1.05)}
@@ -283,7 +284,11 @@ p{max-width:64ch}
 .masonry .tile .zoom{position:absolute;right:.7rem;top:.7rem;width:34px;height:34px;border-radius:50%;background:rgba(245,243,238,.92);display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(-4px);transition:opacity .4s var(--ease),transform .4s var(--ease);z-index:2}
 .masonry .tile:hover .zoom{opacity:1;transform:translateY(0)}
 .masonry .tile .zoom svg{width:15px;height:15px;color:var(--ink)}
-.gallery-foot{margin-top:clamp(2rem,4vw,3rem);display:flex;justify-content:center}
+.gallery-foot{margin-top:clamp(2rem,4vw,3rem);display:flex;flex-direction:column;align-items:center;gap:1.1rem}
+.gal-toggle .chev{width:1.05em;height:1.05em;transition:transform .4s var(--ease)}
+.gal-toggle.open .chev{transform:rotate(180deg)}
+.gal-src{font-size:.86rem;color:var(--muted);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line-strong);transition:color .3s var(--ease)}
+.gal-src:hover{color:var(--accent)}
 
 /* lightbox */
 .lightbox{position:fixed;inset:0;z-index:90;background:rgba(15,13,9,.93);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:clamp(1rem,4vw,3rem);opacity:0;visibility:hidden;transition:opacity .4s var(--ease),visibility .4s var(--ease)}
