@@ -448,6 +448,7 @@ p{max-width:64ch}
   .strip .s-item:nth-child(odd){padding-left:0}
   .strip .s-item:nth-child(even){border-left:1px solid var(--line)}
   .strip .s-item:nth-child(n+3){border-top:1px solid var(--line);padding-top:1.15rem}
+  .strip .s-item:last-child{grid-column:1 / -1;align-items:center;text-align:center;padding-left:0}
 }
 @media (max-width:560px){
   :root{--gutter:1.2rem}
