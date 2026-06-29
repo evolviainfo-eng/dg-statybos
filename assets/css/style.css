@@ -255,6 +255,7 @@ p{max-width:64ch}
 .proc-counter{position:absolute;left:1.2rem;bottom:1.1rem;z-index:2;font-family:var(--font-display);font-weight:600;letter-spacing:-.03em;display:flex;align-items:baseline;gap:.15rem}
 .proc-counter .c-cur{font-size:3.2rem;color:var(--on-dark);line-height:1}
 .proc-counter .c-tot{font-size:1.4rem;color:var(--on-dark-muted)}
+.proc-cap{display:none}  /* desktop uses the side steps; mobile shows this pinned caption */
 
 /* steps */
 .proc-steps{display:flex;flex-direction:column;counter-reset:step}
@@ -428,17 +429,19 @@ p{max-width:64ch}
   .intro-media .cap{right:0}
   .svc{grid-template-columns:auto 1fr;gap:1.2rem 1.5rem}
   .svc-media{grid-column:1/-1;margin-top:1rem;aspect-ratio:16/9}
-  .proc-layout{grid-template-columns:1fr;margin-top:.5rem}
-  .proc-visual{display:none}
-  .proc-step{min-height:auto;opacity:1;padding:2.4rem 0;border-bottom:1px solid var(--dark-line)}
-  .proc-step:first-child{padding-top:.5rem}
-  .proc-step:last-child{border-bottom:none;padding-bottom:0}
-  .proc-step .st-img{display:block;order:-1;margin:0 0 1.4rem;position:relative}
-  .proc-step .st-img img{aspect-ratio:4/3}
-  .proc-step .st-img::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(21,19,14,0) 55%,rgba(21,19,14,.6) 100%);z-index:1;border-radius:inherit}
-  .proc-step .st-img::after{content:"0" counter(step);position:absolute;left:1rem;bottom:.7rem;z-index:2;font-family:var(--font-display);font-weight:600;font-size:2.2rem;line-height:1;color:var(--on-dark)}
-  .proc-step .st-n{font-size:.8rem}
-  .proc-step .h3{margin-top:.6rem}
+  /* mobile process: desktop-like sticky scroll — image AND caption pin, both cross-fade per stage */
+  .proc-layout{display:block;margin-top:1rem}
+  .proc-visual{display:block;position:sticky;top:calc(var(--nav-h) + 10px);height:40vh;z-index:2;background:var(--dark-bg)}
+  .proc-counter .c-cur{font-size:2.2rem}
+  .proc-counter .c-tot{font-size:1rem}
+  .proc-cap{display:flex;flex-direction:column;position:sticky;top:calc(var(--nav-h) + 10px + 40vh);z-index:2;background:var(--dark-bg);padding:1.5rem 0 2rem;min-height:36vh;transition:opacity .28s var(--ease)}
+  .proc-cap.fade{opacity:0}
+  .proc-cap .pc-n{font-family:var(--font-body);font-weight:700;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+  .proc-cap .pc-h{font-family:var(--font-display);font-weight:500;font-size:clamp(1.6rem,6.5vw,2.05rem);letter-spacing:-.02em;color:var(--on-dark);margin:.7rem 0 0;line-height:1.04}
+  .proc-cap .pc-p{margin-top:.9rem;color:var(--on-dark-muted);max-width:42ch}
+  .proc-steps{position:relative;z-index:1;opacity:0;pointer-events:none}
+  .proc-step{min-height:84vh}
+  .proc-step .st-img{display:none}
   .proc-progress{display:none}
   .faq-grid{grid-template-columns:1fr;gap:2rem}
   .contact-grid{grid-template-columns:1fr}

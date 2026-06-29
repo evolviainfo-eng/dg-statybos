@@ -146,7 +146,15 @@
   const steps = $$(".proc-step");
   const stageImgs = $$(".proc-visual .stage-img");
   const cCur = $(".proc-counter .c-cur");
+  const cap = $("#procCap");
+  const fillCap = (idx) => {
+    if (!cap || !steps[idx]) return;
+    $(".pc-n", cap).textContent = $(".st-n", steps[idx]).textContent;
+    $(".pc-h", cap).textContent = $(".h3", steps[idx]).textContent;
+    $(".pc-p", cap).textContent = $("p", steps[idx]).textContent;
+  };
   if (steps.length) {
+    fillCap(0); // pre-populate the mobile pinned caption
     let active = -1;
     const setActive = (idx) => {
       if (idx === active) return;
@@ -154,12 +162,17 @@
       steps.forEach((s, i) => s.classList.toggle("active", i === idx));
       stageImgs.forEach((s, i) => s.classList.toggle("active", i === idx));
       if (cCur) cCur.textContent = "0" + (idx + 1);
+      if (cap) { cap.classList.add("fade"); setTimeout(() => { fillCap(idx); cap.classList.remove("fade"); }, 170); }
     };
+    // Mobile pins the image on top, so detect the active step lower (in the reading band below it).
+    const procRM = window.matchMedia("(max-width:920px)").matches
+      ? "-70% 0px -14% 0px"
+      : "-45% 0px -45% 0px";
     const stepIO = new IntersectionObserver((entries) => {
       entries.forEach(en => {
         if (en.isIntersecting) setActive(+en.target.dataset.step);
       });
-    }, { rootMargin: "-45% 0px -45% 0px", threshold: 0 });
+    }, { rootMargin: procRM, threshold: 0 });
     steps.forEach(s => stepIO.observe(s));
 
     /* progress rail fill (scrubbed) */
